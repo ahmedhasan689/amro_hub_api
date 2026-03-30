@@ -4,12 +4,14 @@ import * as bcrypt from 'bcryptjs';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { User } from '../users/user.entity';
+import { I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private readonly i18n: I18nService,
   ) {}
 
   async login(loginDto: LoginDto) {
@@ -29,7 +31,7 @@ export class AuthService {
     const token = this.generateToken(user.id, user.email);
 
     return {
-      message: 'Login Successfully',
+      message: this.i18n.t('messages.auth.login_success'),
       user: this.sanitizeUser(user),
       access_token: token,
     };

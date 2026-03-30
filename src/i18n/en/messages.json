@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "login_success": "Login Successfully",
+    "invalid_credentials": "Invalid email or password",
+    "unauthorized": "Unauthorized"
+  },
+  "users": {
+    "not_found": "User not found",
+    "created": "User created successfully"
+  }
+}
