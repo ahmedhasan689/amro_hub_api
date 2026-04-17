@@ -2,7 +2,8 @@
   "auth": {
     "login_success": "Login Successfully",
     "invalid_credentials": "Invalid email or password",
-    "unauthorized": "Unauthorized"
+    "unauthorized": "Unauthorized",
+    "wrong_permission": "You do not have permission"
   },
   "users": {
     "not_found": "User not found",

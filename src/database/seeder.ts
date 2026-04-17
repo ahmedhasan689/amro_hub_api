@@ -12,8 +12,8 @@ async function runSeed() {
 
 
   await dataSource.query(`
-    INSERT IGNORE INTO users (id, name, email, phoneNumber, password, createdAt, updatedAt) VALUES 
-    ('${id}', 'Admin', 'admin@amrohub.com', '0599724037', '${hashedPassword}', now(), now())
+    INSERT IGNORE INTO users (id, name, email, phoneNumber, role, isActive, lastActiveAt, password, createdAt, updatedAt) VALUES 
+    ('${id}', 'Admin', 'admin@amrohub.com', '0599724037', 'admin', true, now(), '${hashedPassword}', now(), now())
   `);
 
   console.log('✅ Seeding completed!');

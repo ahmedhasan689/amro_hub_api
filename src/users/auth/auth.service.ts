@@ -1,15 +1,15 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
-import { UsersService } from '../users/users.service';
-import { LoginDto } from './dto/login.dto';
-import { User } from '../users/user.entity';
+import { JwtService } from '@nestjs/jwt';
 import { I18nService } from 'nestjs-i18n';
+import { UsersService } from '../users.service';
+import { User } from '../user.entity';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
+    private userService: UsersService,
     private jwtService: JwtService,
     private readonly i18n: I18nService,
   ) {}
@@ -17,7 +17,7 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     const { email, password } = loginDto;
 
-    const user = await this.usersService.findByEmailWithPassword(email);
+    const user = await this.userService.findByEmailWithPassword(email);
 
     if (!user) {
       throw new UnauthorizedException('بيانات الدخول غير صحيحة');
@@ -32,13 +32,13 @@ export class AuthService {
 
     return {
       message: this.i18n.t('messages.auth.login_success'),
-      user: this.sanitizeUser(user),
+      admin: this.sanitizeUser(user),
       access_token: token,
     };
   }
 
-  private generateToken(userId: string, email: string): string {
-    return this.jwtService.sign({ sub: userId, email });
+  private generateToken(adminId: string, email: string): string {
+    return this.jwtService.sign({ sub: adminId, email, type: 'user' });
   }
 
   private sanitizeUser(user: User) {
